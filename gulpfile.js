@@ -1,15 +1,17 @@
 'use strict';
 
-import gulp from 'gulp';
-import gulp_webpack from 'webpack-stream';
-import named from 'vinyl-named';
-import webpack from 'webpack';
+var gulp = require('gulp');
+var gulp_webpack = require('webpack-stream');
+var gulp_rename = require('gulp-rename');
+var gulp_uglify = require('gulp-uglify');
+var named = require('vinyl-named');
+var webpack = require('webpack');
 
 // ----------------------------------------------------------------------------
 
 var webpack_config = {
     output: {
-        filename: '[name].min.js',
+        filename: '[name].js',
         library: 'choose_file',
         libraryTarget: 'umd'
     },
@@ -19,7 +21,7 @@ var webpack_config = {
     },
     module: {
         loaders: [
-            {test: /\.jsx?$/, loaders: ['babel?presets[]=es2015'], exclude: /(node_modules|bower_components)/}
+            {test: /\.jsx?$/, loaders: ['babel'], exclude: /(node_modules|bower_components)/}
         ]
     },
     plugins: [
@@ -27,7 +29,7 @@ var webpack_config = {
         new webpack.ExtendedAPIPlugin(),
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.OccurenceOrderPlugin(true),
-        new webpack.optimize.UglifyJsPlugin({output: {comments: false}, compress: {warnings: false, unused: false}}),
+        // new webpack.optimize.UglifyJsPlugin({output: {comments: false}, compress: {warnings: false, unused: false}}),
         new webpack.ResolverPlugin(new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"]))
     ],
     node: {
@@ -37,19 +39,16 @@ var webpack_config = {
 
 // ----------------------------------------------------------------------------
 
-gulp.task('js', () => {
+gulp.task('build', function () {
     return gulp.src(['src/choose-file.js'])
         .pipe(named())
         .pipe(gulp_webpack(webpack_config))
+        .pipe(gulp.dest('dist'))
+        .pipe(gulp_uglify())
+        .pipe(gulp_rename({suffix: '.min'}))
         .pipe(gulp.dest('dist'));
 });
 
-// gulp.task('js-cs', () => {
-//     return gulp.src([dirs.src + '/**/*.js', dirs.src + '/**/*.jsx'])
-//         .pipe(gulp_esformatter())
-//         .pipe(gulp.dest(dirs.src));
-// });
-
 // ----------------------------------------------------------------------------
 
-gulp.task('default', ['js']);
+gulp.task('default', ['build']);

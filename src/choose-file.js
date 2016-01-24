@@ -1,7 +1,7 @@
 'use strict';
 
-import extend from 'lodash/assignIn';
-import is_function from 'lodash/isFunction';
+var assign = require('object-assign');
+var is_function = require('lodash/isFunction');
 
 var is_presto = !!window.opera;
 var is_trident = document.all && !is_presto;
@@ -31,9 +31,9 @@ module.exports = function (params) {
     var input;
     var options;
 
-    options = extend({}, defaults, is_function(params) ? {
+    options = assign({}, defaults, is_function(params) ? {
         success: params
-    } : params);
+    } : (params || {}));
     options.success = is_function(options.success) ? options.success : defaults.success;
 
     input = document.createElement('input');
