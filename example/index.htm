@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="../dist/choose-file.js"></script>
+    <style>
+        .choose-file-demo-link {
+            border-bottom: 1px dotted;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            cursor: pointer;
+            color: blue;
+        }
+
+        .choose-file-demo-link:hover {
+            color: #ff5223;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        <span class="choose-file-demo-link">Choose File</span>
+    </p>
+    <ul class="choose-file-demo-list">
+    </ul>
+    <script>
+        document.querySelector('.choose-file-demo-link').addEventListener('click', function () {
+            choose_file({
+                multiple: true,
+                accept: 'image/*',
+                success: function (input) {
+                    var fragment = document.createDocumentFragment();
+                    var list = document.querySelector('.choose-file-demo-list');
+                    var names = [];
+
+                    if (input.files) {
+                        Array.prototype.forEach.call(input.files, function (item, index, arr) {
+                            names.push(item.name);
+                        });
+                    } else {
+                        names.push(input.value.replace(/(.*[\\/])?([^\\/]+)$/, '$2'));
+                    }
+
+                    names.forEach(function (item, index, arr) {
+                        var li = document.createElement('li');
+                        li.appendChild(document.createTextNode(item));
+
+                        fragment.appendChild(li);
+                    });
+
+                    if (list) {
+                        list.innerHTML = '';
+                        list.appendChild(fragment);
+                    }
+                }
+            });
+        }, false);
+    </script>
+</body>
+</html>
