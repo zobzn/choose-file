@@ -47,7 +47,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "f0038c9d6f632fabb4f8";
+/******/ 	__webpack_require__.h = "b676582d2cebdb3e1bf2";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -87,7 +87,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	var input_remove = function (input) {
-	    input.parentNode && input.parentNode.removeChild(input);
+	    is_trident || input.parentNode && input.parentNode.removeChild(input);
 	    input.removeAttribute('accept');
 	    input.removeAttribute('style');
 	};

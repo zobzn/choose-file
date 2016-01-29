@@ -22,7 +22,7 @@ var on = function (event, element, callback) {
 };
 
 var input_remove = function (input) {
-    input.parentNode && input.parentNode.removeChild(input);
+    is_trident || input.parentNode && input.parentNode.removeChild(input);
     input.removeAttribute('accept');
     input.removeAttribute('style');
 };
