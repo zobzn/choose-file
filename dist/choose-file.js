@@ -47,7 +47,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "b676582d2cebdb3e1bf2";
+/******/ 	__webpack_require__.h = "05ce0eff1b9563477190";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -72,7 +72,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var is_presto = !!window.opera;
 	var is_trident = document.all && !is_presto;
 	var defaults = {
-	    style: 'position: absolute; clip: rect(0, 0, 0, 0);',
 	    multiple: false,
 	    accept: '*/*',
 	    success: function (input) {}
@@ -88,8 +87,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var input_remove = function (input) {
 	    is_trident || input.parentNode && input.parentNode.removeChild(input);
-	    input.removeAttribute('accept');
-	    input.removeAttribute('style');
+	    // input.removeAttribute('accept');
+	    // input.removeAttribute('style');
 	};
 
 	module.exports = function (params) {
@@ -102,8 +101,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    options.success = is_function(options.success) ? options.success : defaults.success;
 
 	    input = document.createElement('input');
+	    input.setAttribute('style', 'position: absolute; clip: rect(0, 0, 0, 0);');
 	    input.setAttribute('accept', options.accept);
-	    input.setAttribute('style', options.style);
 	    input.setAttribute('type', 'file');
 	    input.multiple = !!options.multiple;
 

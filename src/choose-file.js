@@ -6,7 +6,6 @@ var is_function = require('lodash/isFunction');
 var is_presto = !!window.opera;
 var is_trident = document.all && !is_presto;
 var defaults = {
-    style: 'position: absolute; clip: rect(0, 0, 0, 0);',
     multiple: false,
     accept: '*/*',
     success: function (input) {
@@ -23,8 +22,8 @@ var on = function (event, element, callback) {
 
 var input_remove = function (input) {
     is_trident || input.parentNode && input.parentNode.removeChild(input);
-    input.removeAttribute('accept');
-    input.removeAttribute('style');
+    // input.removeAttribute('accept');
+    // input.removeAttribute('style');
 };
 
 module.exports = function (params) {
@@ -37,8 +36,8 @@ module.exports = function (params) {
     options.success = is_function(options.success) ? options.success : defaults.success;
 
     input = document.createElement('input');
+    input.setAttribute('style', 'position: absolute; clip: rect(0, 0, 0, 0);');
     input.setAttribute('accept', options.accept);
-    input.setAttribute('style', options.style);
     input.setAttribute('type', 'file');
     input.multiple = !!options.multiple;
 
